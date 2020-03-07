@@ -1,0 +1,4 @@
+[submodule "simavr"]
+	path = simavr
+	url = git@github.com:stg101/simavr.git
+	branch = master
