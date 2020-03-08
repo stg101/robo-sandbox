@@ -3,6 +3,8 @@ simavr-repo = ./simavr
 simavr = ${simavr-repo}/simavr
 simavr-parts = ${simavr-repo}/examples/parts
 
+box2d-repo = ./box2d
+
 firm_src = ${wildcard ./src/at*.c}
 firmware = ${firm_src:.c=.axf}
 
@@ -40,12 +42,16 @@ CPPFLAGS += ${patsubst %,-I%,${subst :, ,${IPATH}}}
 
 include ${simavr-repo}/examples/Makefile.opengl
 
-all: ${OBJ} libsimavr ${firmware} ${target}
+all: ${OBJ} libsimavr libbox2d ${firmware} ${target}
 
 include ./Makefile.common
 
 libsimavr:
 	${E}echo BUILD $@; make -C ${simavr} libsimavr
+	@echo $@ done
+
+libbox2d:
+	${E}echo BUILD $@; cd ${box2d-repo}; ./build.sh
 	@echo $@ done
 
 ${OBJ}:
@@ -62,6 +68,7 @@ ${target}: ${board}
 
 clean:
 	${E}echo CLEAN simavr; make -C ${simavr-repo} clean
+	${E}echo CLEAN box2d; rm -rf ${box2d-repo}/build
 	${E}echo RMDIR ${OBJ-PREFIX}; rm -r ${OBJ-PREFIX}
 	@echo $@ done
 
