@@ -22,6 +22,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/sleep.h>
+#include <avr/sfr_defs.h>
 
 // for linker, emulator, and programmer's sake
 #include "avr_mcu_section.h"
