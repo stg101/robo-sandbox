@@ -10,6 +10,7 @@ string(STRIP ${SIMAVR_OBJ_DIRNAME} SIMAVR_OBJ_DIRNAME)
 find_package(SDL2 REQUIRED)
 find_package(OpenGL REQUIRED)
 
+
 add_subdirectory(${CMAKE_SOURCE_DIR}/box2d)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src)
 
@@ -25,11 +26,16 @@ include_directories (
     ${OPENGL_INCLUDE_DIRS}
 )
 
+add_compile_options(
+    -lelf
+)
+
 file(
     GLOB HELLO_EMU_SRCS
     "${CMAKE_SOURCE_DIR}/src/*.cpp"
     "${CMAKE_SOURCE_DIR}/src/tests/*.cpp"
     "${CMAKE_SOURCE_DIR}/src/tests/simavr_hello/*.cpp"
+    "${CMAKE_SOURCE_DIR}/simavr/simavr/sim/sim_elf.c"
 )
 
 # file(
@@ -48,8 +54,10 @@ add_custom_target(
 add_executable(MyProject ${HELLO_EMU_SRCS})
 add_dependencies(MyProject box2d simavr_lib)
 
+
 target_link_libraries(
     MyProject
+    elf
     box2d
     glfw
     imgui
