@@ -19,10 +19,13 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-#include <stdio.h>
 
 #include "test.h"
-#include "sim_elf.h"
+
+extern "C"
+{
+#include "ledramp.h"
+}
 
 // This is a fun demo that shows off the wheel joint
 class Simavr : public Test
@@ -34,19 +37,9 @@ public:
         m_zeta = 0.7f;
         m_speed = 50.0f;
 
+        ledramp_init();
+
         b2Body *ground = NULL;
-
-        {
-
-            elf_firmware_t f;
-            const char *fname = "./src/my_firmware.elf";
-            //char path[256];
-
-            //	sprintf(path, "%s/%s", dirname(argv[0]), fname);
-            //	printf("Firmware pathname is %s\n", path);
-            printf("Firmware pathname is s\n");
-            elf_read_firmware(fname, &f);
-        }
         {
             b2BodyDef bd;
             ground = m_world->CreateBody(&bd);

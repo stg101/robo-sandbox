@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.12) 
-project(MyProject VERSION 1.0.0)
-project(MyProject C CXX)
-
+project(RoboSandboxProject VERSION 1.0.0)
+project(RoboSandboxProject C CXX)
 
 execute_process(COMMAND ${CMAKE_C_COMPILER} -dumpmachine OUTPUT_VARIABLE SIMAVR_OBJ_DIRNAME)
 string(STRIP ${SIMAVR_OBJ_DIRNAME} SIMAVR_OBJ_DIRNAME)
@@ -9,7 +8,6 @@ string(STRIP ${SIMAVR_OBJ_DIRNAME} SIMAVR_OBJ_DIRNAME)
 
 find_package(SDL2 REQUIRED)
 find_package(OpenGL REQUIRED)
-
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/box2d)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src)
@@ -26,24 +24,16 @@ include_directories (
     ${OPENGL_INCLUDE_DIRS}
 )
 
-add_compile_options(
-    -lelf
-)
 
 file(
     GLOB HELLO_EMU_SRCS
+    "${CMAKE_SOURCE_DIR}/simavr/examples/parts/button.c"
+    "${CMAKE_SOURCE_DIR}/simavr/simavr/sim/sim_elf.c"
+    "${CMAKE_SOURCE_DIR}/src/tests/simavr_hello/ledramp.c"
     "${CMAKE_SOURCE_DIR}/src/*.cpp"
     "${CMAKE_SOURCE_DIR}/src/tests/*.cpp"
     "${CMAKE_SOURCE_DIR}/src/tests/simavr_hello/*.cpp"
-    "${CMAKE_SOURCE_DIR}/simavr/simavr/sim/sim_elf.c"
 )
-
-# file(
-#     GLOB HELLO_EMU_SRCS
-#     "${CMAKE_SOURCE_DIR}/src/cli.cpp"
-#     "${CMAKE_SOURCE_DIR}/src/*.c"
-#     "${CMAKE_SOURCE_DIR}/simavr/examples/parts/ssd1306_virt.c"
-# )
 
 add_custom_target(
     simavr_lib
@@ -51,12 +41,12 @@ add_custom_target(
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/simavr/simavr
 )
 
-add_executable(MyProject ${HELLO_EMU_SRCS})
-add_dependencies(MyProject box2d simavr_lib)
+add_executable(RoboSandboxProject ${HELLO_EMU_SRCS})
+add_dependencies(RoboSandboxProject box2d simavr_lib)
 
 
 target_link_libraries(
-    MyProject
+    RoboSandboxProject
     elf
     box2d
     glfw

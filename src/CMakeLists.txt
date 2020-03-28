@@ -1,10 +1,10 @@
 # I target a recent cmake, it shouldn't be a problem on a dev machine
 cmake_minimum_required(VERSION 3.11)
 # Project name
-project("My Firmware")
+project("Firmware")
 
 # Product filename
-set(PRODUCT_NAME my_firmware)
+set(PRODUCT_NAME atmega_firmware)
 
 ## AVR Chip Configuration
 # 8Mhz, this should match the crystal on your board,
@@ -38,13 +38,6 @@ include_directories (
 )
 
 
-# include_directories (
-#     ${CMAKE_SOURCE_DIR}/simavr/simavr/cores
-#     ${CMAKE_SOURCE_DIR}/simavr/examples/parts
-#     ${CMAKE_SOURCE_DIR}/simavr/simavr/sim
-#     ${CMAKE_SOURCE_DIR}/simavr/simavr/sim/avr
-# )
-
 # Pass defines to compiler
 add_definitions(
     -DF_CPU=${F_CPU}
@@ -76,7 +69,7 @@ add_compile_options(
     -fno-split-wide-types
 	-fno-tree-scev-cprop
 )
-file(GLOB SRC_FILES "tests/simavr_hello/*.c") # Load all files in src folder
+file(GLOB SRC_FILES "tests/simavr_hello/atmega*.c") # Load all files in src folder
 
 # Create one target
 add_executable(${PRODUCT_NAME} ${SRC_FILES})
