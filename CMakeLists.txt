@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 project(RoboSandboxProject VERSION 1.0.0)
 project(RoboSandboxProject C CXX)
 
+
 execute_process(COMMAND ${CMAKE_C_COMPILER} -dumpmachine OUTPUT_VARIABLE SIMAVR_OBJ_DIRNAME)
 string(STRIP ${SIMAVR_OBJ_DIRNAME} SIMAVR_OBJ_DIRNAME)
 
@@ -56,3 +57,17 @@ target_link_libraries(
     ${SDL2_LIBRARIES}
     ${OPENGL_LIBRARIES}
 )
+
+set_target_properties(RoboSandboxProject PROPERTIES
+    CXX_STANDARD 11
+    CXX_STANDARD_REQUIRED YES
+    CXX_EXTENSIONS NO
+)
+
+
+# Copy font files, etc
+add_custom_command(
+        TARGET RoboSandboxProject POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+                ${CMAKE_CURRENT_SOURCE_DIR}/src/data/
+                ${CMAKE_CURRENT_BINARY_DIR}/data/)
