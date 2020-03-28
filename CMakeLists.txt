@@ -29,7 +29,6 @@ file(
     GLOB HELLO_EMU_SRCS
     "${CMAKE_SOURCE_DIR}/simavr/examples/parts/button.c"
     "${CMAKE_SOURCE_DIR}/simavr/simavr/sim/sim_elf.c"
-    "${CMAKE_SOURCE_DIR}/src/tests/simavr_hello/ledramp.c"
     "${CMAKE_SOURCE_DIR}/src/*.cpp"
     "${CMAKE_SOURCE_DIR}/src/tests/*.cpp"
     "${CMAKE_SOURCE_DIR}/src/tests/simavr_hello/*.cpp"

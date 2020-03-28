@@ -29,13 +29,15 @@
 
 #include <stdbool.h>
 
+extern "C"
+{
 #include "sim_avr.h"
 #include "avr_ioport.h"
 #include "sim_elf.h"
 #include "sim_gdb.h"
 #include "sim_vcd_file.h"
-
 #include "button.h"
+}
 
 #define BYTE_TO_BINARY_PATTERN "%c%c%c%c%c%c%c%c"
 #define BYTE_TO_BINARY(byte)       \
