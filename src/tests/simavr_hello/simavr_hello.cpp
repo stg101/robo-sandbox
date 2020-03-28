@@ -260,6 +260,9 @@ public:
 			m_spring1->SetSpringFrequencyHz(m_hz);
 			m_spring2->SetSpringFrequencyHz(m_hz);
 			break;
+
+		default:
+			keyCB(key);
 		}
 	}
 

@@ -10,7 +10,7 @@
 #include "button.h"
 
 void pin_changed_hook(struct avr_irq_t *irq, uint32_t value, void *param);
-void keyCB(unsigned char key, int x, int y);
+void keyCB(unsigned char key);
 int msleep(long msec);
 
 static void *avr_run_thread(void *param);

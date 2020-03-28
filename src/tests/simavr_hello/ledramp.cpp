@@ -19,6 +19,7 @@
 	along with simavr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
 #include <libgen.h>
@@ -27,7 +28,10 @@
 #include <time.h>  // pause msec
 #include <errno.h> // pause msec
 
+#include <chrono>
 #include <stdbool.h>
+
+using namespace std;
 
 extern "C"
 {
@@ -58,6 +62,7 @@ uint8_t pin_state = 0; // current port B
 
 float pixsize = 64;
 int window;
+bool is_paused = false;
 
 /*
  * called when the AVR change any of the pins on port B
@@ -68,25 +73,31 @@ void pin_changed_hook(struct avr_irq_t *irq, uint32_t value, void *param)
 	pin_state = (pin_state & ~(1 << irq->irq)) | (value << irq->irq);
 }
 
-void keyCB(unsigned char key, int x, int y) /* called on key press */
+void keyCB(unsigned char key) /* called on key press */
 {
-	if (key == 'q')
-		exit(0);
-	//static uint8_t buf[64];
+
+	printf("pressed key %c \n", key);
+	if (is_paused && key == 'H')
+	{
+		is_paused = false;
+		return;
+	}
+
 	switch (key)
 	{
-	case 'q':
-	case 0x1f: // escape
-		exit(0);
-		break;
-	case ' ':
+	case 'J':
+		printf("Message sent\n");
 		do_button_press++; // pass the message to the AVR thread
 		break;
-	case 'r':
+	case 'H':
+		printf("*** PAUSED ***\n");
+		is_paused = true;
+		break;
+	case 'K':
 		printf("Starting VCD trace\n");
 		avr_vcd_start(&vcd_file);
 		break;
-	case 's':
+	case 'L':
 		printf("Stopping VCD trace\n");
 		avr_vcd_stop(&vcd_file);
 		break;
@@ -117,11 +128,27 @@ int msleep(long msec)
 
 static void *interface_thread(void *param)
 {
+	auto start = chrono::steady_clock::now();
+	auto current_time = chrono::steady_clock::now();
+	int elapsed_time = chrono::duration_cast<chrono::milliseconds>(current_time - start).count();
+
 	while (true)
 	{
-		printf("leds : " BYTE_TO_BINARY_PATTERN, BYTE_TO_BINARY(pin_state));
-		printf("\n");
-		msleep(1000 / 64);
+		current_time = chrono::steady_clock::now();
+		elapsed_time = chrono::duration_cast<chrono::milliseconds>(current_time - start).count();
+
+		if (elapsed_time >= 1000 / 64)
+		{
+
+			if (is_paused)
+				continue;
+
+			printf("" BYTE_TO_BINARY_PATTERN, BYTE_TO_BINARY(pin_state));
+			printf(" : %d", pin_state);
+			printf("\n");
+
+			start = chrono::steady_clock::now();
+		}
 	}
 	return NULL;
 }
@@ -147,10 +174,6 @@ int ledramp_init()
 {
 	elf_firmware_t f;
 	const char *fname = "./src/atmega_firmware.elf";
-	//char path[256];
-
-	//	sprintf(path, "%s/%s", dirname(argv[0]), fname);
-	//	printf("Firmware pathname is %s\n", path);
 	elf_read_firmware(fname, &f);
 
 	printf("firmware %s f=%d mmcu=%s\n", fname, (int)f.frequency, f.mmcu);
