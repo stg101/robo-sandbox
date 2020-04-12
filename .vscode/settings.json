@@ -52,6 +52,10 @@
         "streambuf": "cpp",
         "thread": "cpp",
         "cinttypes": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "sim_irq.h": "c",
+        "functional": "cpp",
+        "iterator": "cpp",
+        "avr_mcu_section.h": "c"
     }
 }

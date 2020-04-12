@@ -20,7 +20,6 @@ include_directories (
     ${CMAKE_SOURCE_DIR}/simavr/examples/parts
     ${CMAKE_SOURCE_DIR}/simavr/simavr/sim
     ${CMAKE_SOURCE_DIR}/box2d/include
-    /usr/local/include
     ${SDL2_INCLUDE_DIRS}
     ${OPENGL_INCLUDE_DIRS}
 )

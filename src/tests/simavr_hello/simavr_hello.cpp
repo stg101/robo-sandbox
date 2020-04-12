@@ -21,8 +21,7 @@
 // SOFTWARE.
 
 #include "test.h"
-
-#include "ledramp.h"
+#include "robot.h"
 
 // This is a fun demo that shows off the wheel joint
 class Simavr : public Test
@@ -33,8 +32,6 @@ public:
 		m_hz = 4.0f;
 		m_zeta = 0.7f;
 		m_speed = 50.0f;
-
-		ledramp_init();
 
 		b2Body *ground = NULL;
 		{
@@ -261,8 +258,14 @@ public:
 			m_spring2->SetSpringFrequencyHz(m_hz);
 			break;
 
+		case GLFW_KEY_G:
+			robot.createMCU("./src/atmega_firmware.elf");
+			robot.createBody(m_world);
+			robot.runSim();
+			break;
+
 		default:
-			keyCB(key);
+			robot.keyPress(key);
 		}
 	}
 
@@ -291,6 +294,8 @@ public:
 	float m_speed;
 	b2WheelJoint *m_spring1;
 	b2WheelJoint *m_spring2;
+
+	Robot robot;
 };
 
 static int testIndex = RegisterTest("Examples", "Simavr", Simavr::Create);

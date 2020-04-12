@@ -68,7 +68,7 @@ void tick_init()
 		prescaler=8
 		hz=64
 		(clock/prescaler/hz)-1:63 -- */
-	OCR2A = 63;
+	OCR2A = 255;
 	TIMSK2 |= (1 << OCIE2A);
 }
 
@@ -84,7 +84,7 @@ ISR(PCINT1_vect)
 int main()
 {
 	DDRB = 0xff; // all PORT B output
-	DDRC = 0;	// make PORT C input
+	DDRC = 0;	 // make PORT C input
 	// enable pin change interrupt for PORT C pin 0
 	PCMSK1 |= (1 << PCINT8); // C0
 	PCICR |= (1 << PCIE1);
