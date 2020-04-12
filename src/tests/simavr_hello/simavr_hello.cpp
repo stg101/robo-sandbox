@@ -257,9 +257,9 @@ public:
 			m_spring1->SetSpringFrequencyHz(m_hz);
 			m_spring2->SetSpringFrequencyHz(m_hz);
 			break;
-
 		case GLFW_KEY_G:
-			robot.createMCU("./src/atmega_firmware.elf");
+			// robot.createMCU("./src/atmega_firmware.elf");
+			robot.createMCU("./src/tests/simavr_hello/arduino_firmware/arduino_firmware.arduino.avr.uno.hex");
 			robot.createBody(m_world);
 			robot.runSim();
 			break;

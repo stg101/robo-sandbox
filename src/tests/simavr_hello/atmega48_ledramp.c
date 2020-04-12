@@ -62,7 +62,7 @@ void tick_init()
 	ASSR |= (1 << AS2);
 	TCCR2A = (1 << WGM21);
 	// use CLK/8 prescale value, clear timer/counter on compareA match
-	TCCR2B = (2 << CS20);
+	TCCR2B = (4 << CS20);
 	/*   -- MathPad
 		clock=32768
 		prescaler=8
@@ -83,7 +83,7 @@ ISR(PCINT1_vect)
 
 int main()
 {
-	DDRB = 0xff; // all PORT B output
+	DDRD = 0xff; // all PORT B output
 	DDRC = 0;	 // make PORT C input
 	// enable pin change interrupt for PORT C pin 0
 	PCMSK1 |= (1 << PCINT8); // C0
@@ -101,9 +101,9 @@ int main()
 		if (!mask)
 			mask = 1;
 		if (pressed)
-			PORTB = 0xff;
+			PORTD = 0xff;
 		else
-			PORTB = mask;
+			PORTD = mask;
 		sleep_mode();
 	}
 }

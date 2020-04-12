@@ -11,8 +11,12 @@
 extern "C"
 {
 #include "sim_avr.h"
+#include "avr_adc.h"
+#include "avr_extint.h"
 #include "avr_ioport.h"
+#include "sim_time.h"
 #include "sim_elf.h"
+#include "sim_hex.h"
 #include "sim_gdb.h"
 #include "sim_vcd_file.h"
 #include "button.h"
@@ -20,6 +24,8 @@ extern "C"
 
 #include "actuator.h"
 #include "sensor.h"
+
+#define MHZ_16 (16000000)
 
 using namespace std;
 
@@ -30,7 +36,7 @@ public:
 	Robot(const char *);
 	virtual ~Robot();
 
-	void createMCU(const char *);
+	int createMCU(const char *);
 	void createBody(b2World *);
 	void keyPress(unsigned char key);
 

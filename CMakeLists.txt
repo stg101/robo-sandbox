@@ -12,6 +12,7 @@ find_package(OpenGL REQUIRED)
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/box2d)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src)
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/tests/simavr_hello)
 
 include_directories (
     ${CMAKE_SOURCE_DIR}/src

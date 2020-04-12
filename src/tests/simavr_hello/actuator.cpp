@@ -27,7 +27,7 @@ void Actuator::connect(avr_t *n_avr, int i)
 	index = i;
 
 	avr_irq_register_notify(
-		avr_io_getirq(avr, AVR_IOCTL_IOPORT_GETIRQ('B'), index),
+		avr_io_getirq(avr, AVR_IOCTL_IOPORT_GETIRQ('D'), index),
 		hook,
 		this);
 }
@@ -55,8 +55,10 @@ void Actuator::createBody(b2World *n_m_world, int i)
 
 void Actuator::apply()
 {
-	b2Vec2 p = m_body->GetWorldCenter();
-	m_body->ApplyForce(b2Vec2(0.0f, 4.0f), p, true);
+	m_body->SetLinearVelocity(b2Vec2(0.0f, 6.0f));
+
+	// b2Vec2 p = m_body->GetWorldCenter();
+	// m_body->ApplyForce(b2Vec2(0.0f, 4.0f), p, true);
 }
 
 uint8_t Actuator::show()

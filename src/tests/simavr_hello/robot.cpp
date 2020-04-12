@@ -65,7 +65,6 @@ void Robot::runInterfaceThread()
 
 void Robot::runAvrThread()
 {
-
 	while (true)
 	{
 		avr_run(avr);
@@ -73,17 +72,40 @@ void Robot::runAvrThread()
 }
 
 // path "./src/atmega_firmware.elf";
-void Robot::createMCU(const char *firmware_path)
+int Robot::createMCU(const char *firmware_path)
 {
 	fname = firmware_path;
 
-	elf_read_firmware(fname, &f);
+	avr = avr_make_mcu_by_name("atmega328p");
 
-	printf("firmware %s f=%d mmcu=%s\n", fname, (int)f.frequency, f.mmcu);
-
-	avr = avr_make_mcu_by_name(f.mmcu);
+	if (!avr)
+	{
+		printf("mcu name not found\n");
+		return -1;
+	}
 	avr_init(avr);
-	avr_load_firmware(avr, &f);
+
+	avr_extint_set_strict_lvl_trig(avr, EXTINT_IRQ_OUT_INT0, 0);
+	avr_extint_set_strict_lvl_trig(avr, EXTINT_IRQ_OUT_INT1, 0);
+	{
+		/* Load .hex and setup program counter */
+		uint32_t boot_base, boot_size;
+		uint8_t *boot = read_ihex_file(fname, &boot_size, &boot_base);
+		if (!boot)
+		{
+			fprintf(stderr, "Unable to load %s\n", fname);
+			return -1;
+		}
+		memcpy(avr->flash + boot_base, boot, boot_size);
+		free(boot);
+		avr->pc = boot_base;
+		/* end of flash, remember we are writing /code/ */
+		avr->codeend = avr->flashend;
+	}
+
+	/* more simulation parameters */
+	avr->frequency = MHZ_16;
+	avr->aref = ADC_VREF_V256;
 
 	sensor.connect(avr);
 
