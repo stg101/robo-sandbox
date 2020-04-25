@@ -1,5 +1,5 @@
-const int PINS_SIZE = 8;
-int pins[PINS_SIZE] = {0, 1, 2, 3, 4, 5, 6, 7};
+const int PINS_SIZE = 2;
+int pins[PINS_SIZE] = {0, 1};
 
 void setup()
 {
@@ -14,8 +14,9 @@ void loop()
     for (int i = 0; i < PINS_SIZE; i++)
     {
         digitalWrite(pins[i], HIGH);
-        delay(500);
+        delay(2000);
         digitalWrite(pins[i], LOW);
-        delay(500);
+        delay(2000);
     }
+    delay(2000);
 }

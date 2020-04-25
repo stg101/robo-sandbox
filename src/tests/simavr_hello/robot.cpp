@@ -51,11 +51,9 @@ void Robot::runInterfaceThread()
 			if (is_paused)
 				continue;
 
-			for (int i = 0; i < 8; i++)
+			for (int i = 0; i < 2; i++)
 			{
-				uint8_t single_pin_state = actuator_array[i].show();
-				if (single_pin_state == 1)
-					actuator_array[i].apply();
+				actuator_array[i].apply();
 			}
 
 			start = chrono::steady_clock::now();
@@ -105,11 +103,12 @@ int Robot::createMCU(const char *firmware_path)
 
 	/* more simulation parameters */
 	avr->frequency = MHZ_16;
+	avr->sleep = avr_callback_sleep_sync;
 	avr->aref = ADC_VREF_V256;
 
 	sensor.connect(avr);
 
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < 2; i++)
 		actuator_array[i].connect(avr, i);
 }
 
@@ -117,8 +116,27 @@ void Robot::createBody(b2World *n_m_world)
 {
 	m_world = n_m_world;
 
-	for (int i = 0; i < 8; i++)
-		actuator_array[i].createBody(m_world, i);
+	//create car body
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody;
+	m_body = m_world->CreateBody(&bodyDef);
+	m_body->SetAngularDamping(3);
+
+	b2Vec2 vertices[8];
+	vertices[0].Set(1.5, 0);
+	vertices[1].Set(3, 2.5);
+	vertices[2].Set(2.8, 5.5);
+	vertices[3].Set(1, 10);
+	vertices[4].Set(-1, 10);
+	vertices[5].Set(-2.8, 5.5);
+	vertices[6].Set(-3, 2.5);
+	vertices[7].Set(-1.5, 0);
+	b2PolygonShape polygonShape;
+	polygonShape.Set(vertices, 8);
+	b2Fixture *fixture = m_body->CreateFixture(&polygonShape, 0.1f); //shape, density
+
+	for (int i = 0; i < 2; i++)
+		actuator_array[i].createBody(m_world, i, m_body);
 }
 
 void Robot::runSim()
@@ -128,4 +146,30 @@ void Robot::runSim()
 
 	interface_thread.detach();
 	avr_thread.detach();
+}
+
+/*
+Simavr's default sleep callback results in simulated time and
+wall clock time to diverge over time. This replacement tries to
+keep them in sync by sleeping for the time required to match the
+expected sleep deadline in wall clock time.
+*/
+void Robot::avr_callback_sleep_sync(
+	avr_t *avr,
+	avr_cycle_count_t how_long)
+{
+	struct timespec tp;
+
+	/* figure out how long we should wait to match the sleep deadline */
+	uint64_t deadline_ns = avr_cycles_to_nsec(avr, avr->cycle + how_long);
+	clock_gettime(CLOCK_MONOTONIC_RAW, &tp);
+	uint64_t runtime_ns = avr_get_time_stamp(avr);
+	if (runtime_ns >= deadline_ns)
+	{
+		return;
+	}
+
+	uint64_t sleep_us = (deadline_ns - runtime_ns) / 1000;
+	usleep(sleep_us);
+	return;
 }

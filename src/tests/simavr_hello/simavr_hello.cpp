@@ -32,6 +32,7 @@ public:
 		m_hz = 4.0f;
 		m_zeta = 0.7f;
 		m_speed = 50.0f;
+		m_world->SetGravity(b2Vec2(0, 0));
 
 		b2Body *ground = NULL;
 		{
