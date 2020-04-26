@@ -11,10 +11,11 @@ find_package(SDL2 REQUIRED)
 find_package(OpenGL REQUIRED)
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/box2d)
-add_subdirectory(${CMAKE_SOURCE_DIR}/src)
-add_subdirectory(${CMAKE_SOURCE_DIR}/src/tests/simavr_hello)
+add_subdirectory(${CMAKE_SOURCE_DIR}/testbed/tests/diff_robot_arduino)
+add_subdirectory(${CMAKE_SOURCE_DIR}/testbed/tests/diff_robot_avr)
 
 include_directories (
+    ${CMAKE_SOURCE_DIR}/testbed
     ${CMAKE_SOURCE_DIR}/src
     /usr/local/include
     ${CMAKE_SOURCE_DIR}/simavr/simavr/cores
@@ -30,9 +31,11 @@ file(
     GLOB HELLO_EMU_SRCS
     "${CMAKE_SOURCE_DIR}/simavr/examples/parts/button.c"
     "${CMAKE_SOURCE_DIR}/simavr/simavr/sim/sim_elf.c"
+    "${CMAKE_SOURCE_DIR}/testbed/*.cpp"
     "${CMAKE_SOURCE_DIR}/src/*.cpp"
-    "${CMAKE_SOURCE_DIR}/src/tests/*.cpp"
-    "${CMAKE_SOURCE_DIR}/src/tests/simavr_hello/*.cpp"
+    "${CMAKE_SOURCE_DIR}/testbed/tests/*.cpp"
+    "${CMAKE_SOURCE_DIR}/testbed/tests/diff_robot_arduino/*.cpp"
+    "${CMAKE_SOURCE_DIR}/testbed/tests/diff_robot_avr/*.cpp"
 )
 
 add_custom_target(
@@ -69,5 +72,5 @@ set_target_properties(RoboSandboxProject PROPERTIES
 add_custom_command(
         TARGET RoboSandboxProject POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
-                ${CMAKE_CURRENT_SOURCE_DIR}/src/data/
+                ${CMAKE_CURRENT_SOURCE_DIR}/testbed/data/
                 ${CMAKE_CURRENT_BINARY_DIR}/data/)

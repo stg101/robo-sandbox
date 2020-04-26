@@ -69,7 +69,7 @@ add_compile_options(
     -fno-split-wide-types
 	-fno-tree-scev-cprop
 )
-file(GLOB SRC_FILES "tests/simavr_hello/atmega*.c") # Load all files in src folder
+file(GLOB SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/avr_firmware/atmega*.c") # Load all files in src folder
 
 # Create one target
 add_executable(${PRODUCT_NAME} ${SRC_FILES})
