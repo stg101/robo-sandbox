@@ -17,18 +17,15 @@ using namespace std;
 class Sensor
 {
 public:
-	Sensor();
-	virtual ~Sensor();
+	Sensor(){};
+	virtual ~Sensor(){};
 
-	void connect(avr_t *n_avr);
-	void createBody(b2World *n_m_world);
+	virtual void connect(avr_t *n_avr){};
+	virtual void createBody(b2World *n_m_world){};
 
-	void apply();
+	virtual void apply(){};
 
 protected:
-	avr_t *avr;
-	button_t button;
-	b2World *m_world;
 };
 
 #endif

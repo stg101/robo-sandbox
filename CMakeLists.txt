@@ -17,6 +17,10 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/testbed/tests/diff_robot_avr)
 include_directories (
     ${CMAKE_SOURCE_DIR}/testbed
     ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_SOURCE_DIR}/src/bodies
+    ${CMAKE_SOURCE_DIR}/src/actuators
+    ${CMAKE_SOURCE_DIR}/src/sensors
+    ${CMAKE_SOURCE_DIR}/src/robots
     /usr/local/include
     ${CMAKE_SOURCE_DIR}/simavr/simavr/cores
     ${CMAKE_SOURCE_DIR}/simavr/examples/parts
@@ -33,9 +37,14 @@ file(
     "${CMAKE_SOURCE_DIR}/simavr/simavr/sim/sim_elf.c"
     "${CMAKE_SOURCE_DIR}/testbed/*.cpp"
     "${CMAKE_SOURCE_DIR}/src/*.cpp"
+    "${CMAKE_SOURCE_DIR}/src/bodies/*.cpp"
+    "${CMAKE_SOURCE_DIR}/src/actuators/*.cpp"
+    "${CMAKE_SOURCE_DIR}/src/sensors/*.cpp"
+    "${CMAKE_SOURCE_DIR}/src/robots/*.cpp"
     "${CMAKE_SOURCE_DIR}/testbed/tests/*.cpp"
     "${CMAKE_SOURCE_DIR}/testbed/tests/diff_robot_arduino/*.cpp"
     "${CMAKE_SOURCE_DIR}/testbed/tests/diff_robot_avr/*.cpp"
+    "${CMAKE_SOURCE_DIR}/testbed/tests/env_test/*.cpp"
 )
 
 add_custom_target(

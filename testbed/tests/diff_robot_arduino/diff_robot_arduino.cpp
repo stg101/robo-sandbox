@@ -1,27 +1,6 @@
-// MIT License
-
-// Copyright (c) 2019 Erin Catto
-
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
-
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
-
 #include "test.h"
-#include "robot.h"
+#include "differential_robot.h"
+#include "differential_robot_body.h"
 
 // This is a fun demo that shows off the wheel joint
 class DiffRobotArduino : public Test
@@ -38,7 +17,8 @@ public:
 		{
 		case GLFW_KEY_G:
 			robot.createMCU("./testbed/tests/diff_robot_arduino/arduino_firmware/arduino_firmware.arduino.avr.uno.hex");
-			robot.createBody(m_world);
+			robotBody.createBody(m_world);
+			robot.createBody(m_world, &robotBody);
 			robot.runSim();
 			break;
 
@@ -60,7 +40,8 @@ public:
 		return new DiffRobotArduino;
 	}
 
-	Robot robot;
+	DifferentialRobot robot;
+	DifferentialRobotBody robotBody;
 };
 
 static int testIndex = RegisterTest("Examples", "DiffRobotArduino", DiffRobotArduino::Create);
