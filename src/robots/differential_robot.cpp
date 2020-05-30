@@ -4,6 +4,8 @@ DifferentialRobot::DifferentialRobot()
 {
 	avr = NULL;
 	is_paused = false;
+	is_ready = false;
+	ns_debt = 0;
 }
 
 DifferentialRobot::~DifferentialRobot()
@@ -104,6 +106,7 @@ int DifferentialRobot::createMCU(const char *firmware_path)
 	/* more simulation parameters */
 	avr->frequency = MHZ_16;
 	avr->aref = ADC_VREF_V256;
+	avr->sleep = sleepHook;
 
 	sensor.connect(avr);
 
@@ -127,4 +130,44 @@ void DifferentialRobot::runSim()
 
 	interface_thread.detach();
 	avr_thread.detach();
+}
+
+void DifferentialRobot::setIsReady(bool is_ready_value)
+{
+	is_ready = is_ready_value;
+}
+
+void DifferentialRobot::runTimeBatch(uint64_t run_ns)
+{
+	if (ns_debt > run_ns)
+		ns_debt -= run_ns;
+	else
+	{
+		uint64_t start_ns = avr_cycles_to_nsec(avr, avr->cycle);
+		uint64_t runtime_ns = avr_cycles_to_nsec(avr, avr->cycle);
+
+		uint64_t total_run_ns = run_ns - ns_debt;
+		uint64_t elapsed_ns = runtime_ns - start_ns;
+
+		while (elapsed_ns < total_run_ns)
+		{
+			avr_run(avr);
+			runtime_ns = avr_cycles_to_nsec(avr, avr->cycle);
+			elapsed_ns = runtime_ns - start_ns;
+		}
+
+		ns_debt = elapsed_ns - total_run_ns;
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		actuator_array[i].apply();
+	}
+}
+
+void DifferentialRobot::sleepHook(
+	avr_t *avr,
+	avr_cycle_count_t how_long)
+{
+	return;
 }

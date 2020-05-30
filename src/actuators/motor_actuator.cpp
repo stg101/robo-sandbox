@@ -65,7 +65,6 @@ void MotorActuator::createBody(b2World *world, int i, b2Body *chasis_body, Body 
 
 void MotorActuator::apply()
 {
-
 	if (pin_state == 0)
 		m_motorBody->setState(0, 1.0f);
 	else

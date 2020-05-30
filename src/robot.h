@@ -43,8 +43,10 @@ public:
 	virtual int createMCU(const char *){};
 	virtual void createBody(b2World *world, Body *body){};
 	virtual void keyPress(unsigned char key){};
+	virtual void setIsReady(bool is_ready){};
 
 	virtual void runSim(){};
+	virtual void runTimeBatch(uint64_t run_ns){};
 
 protected:
 };

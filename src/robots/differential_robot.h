@@ -2,6 +2,7 @@
 #define DIFFERENTIAL_ROBOT_H
 
 #include <stdlib.h>
+#include <iostream>
 #include <stdio.h>
 #include <chrono>
 #include <unistd.h>
@@ -47,6 +48,9 @@ public:
 	void keyPress(unsigned char key) override;
 
 	void runSim() override;
+	void runTimeBatch(uint64_t run_ns) override;
+	void setIsReady(bool is_ready_value);
+	bool is_ready;
 
 	avr_t *avr;
 	const char *fname;
@@ -54,6 +58,7 @@ public:
 protected:
 	void runInterfaceThread();
 	void runAvrThread();
+	static void sleepHook(avr_t *avr, avr_cycle_count_t how_long);
 
 	MotorBody motorBody_array[2];
 	MotorActuator actuator_array[2];
@@ -64,6 +69,8 @@ protected:
 	bool is_paused;
 	thread interface_thread;
 	thread avr_thread;
+
+	uint64_t ns_debt;
 
 	b2RevoluteJoint *flJoint, *frJoint;
 };

@@ -18,5 +18,4 @@ void loop()
         digitalWrite(pins[i], LOW);
         delay(2000);
     }
-    delay(2000);
 }

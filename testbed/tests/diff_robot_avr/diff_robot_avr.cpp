@@ -1,4 +1,5 @@
 #include "test.h"
+#include "settings.h"
 #include "differential_robot.h"
 #include "differential_robot_body.h"
 
@@ -19,7 +20,7 @@ public:
 			robot.createMCU("./testbed/tests/diff_robot_avr/atmega_firmware.hex");
 			robotBody.createBody(m_world);
 			robot.createBody(m_world, &robotBody);
-			robot.runSim();
+			robot.setIsReady(true);
 			break;
 
 		default:
@@ -27,9 +28,22 @@ public:
 		}
 	}
 
+	void EnvStep(Settings &settings) override
+	{
+		run_ns = (1000000000 / settings.m_hertz);
+
+		if (robot.is_ready)
+		{
+			robot.runTimeBatch(run_ns);
+		}
+	}
+
 	void Step(Settings &settings) override
 	{
 		g_debugDraw.DrawString(5, m_textLine, "Press G to create a new robot");
+		m_textLine += m_textIncrement;
+
+		g_debugDraw.DrawString(5, m_textLine, "goal ns = %d", run_ns);
 		m_textLine += m_textIncrement;
 
 		Test::Step(settings);
@@ -40,6 +54,7 @@ public:
 		return new DiffRobotAVR;
 	}
 
+	uint64_t run_ns;
 	DifferentialRobot robot;
 	DifferentialRobotBody robotBody;
 };
