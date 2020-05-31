@@ -52,7 +52,7 @@ void MotorActuator::createBody(b2World *world, int i, b2Body *chasis_body, Body 
 
 	//back left tire
 	m_motorBody->createBody(m_world);
-	m_motorBody->setCharacteristics(15, -15, 20);
+	m_motorBody->setCharacteristics(600, -600, 1000);
 
 	jointDef.bodyB = m_motorBody->m_body;
 	if (i == 0)
