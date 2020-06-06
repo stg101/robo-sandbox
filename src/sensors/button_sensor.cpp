@@ -9,7 +9,7 @@ ButtonSensor::~ButtonSensor()
 {
 }
 
-void ButtonSensor::connect(avr_t *n_avr)
+void ButtonSensor::connect(avr_t *n_avr, int index)
 {
     avr = n_avr;
     // initialize our 'peripheral'
@@ -23,7 +23,7 @@ void ButtonSensor::connect(avr_t *n_avr)
     avr_raise_irq(button.irq + IRQ_BUTTON_OUT, 1);
 }
 
-void ButtonSensor::createBody(b2World *world)
+void ButtonSensor::createBody(b2World *world, int i, b2Body *chasis_body, Body *motorBody)
 {
     m_world = world;
 }

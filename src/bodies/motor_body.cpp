@@ -8,11 +8,9 @@ MotorBody::MotorBody()
 void MotorBody::createBody(b2World *world)
 {
 
-    b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     m_body = world->CreateBody(&bodyDef);
 
-    b2PolygonShape polygonShape;
     polygonShape.SetAsBox(0.5f, 1.25f);
     m_body->CreateFixture(&polygonShape, 1); //shape density
 }

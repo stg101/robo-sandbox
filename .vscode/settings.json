@@ -59,5 +59,6 @@
         "avr_mcu_section.h": "c",
         "numeric": "cpp",
         "random": "cpp"
-    }
+    },
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
 }

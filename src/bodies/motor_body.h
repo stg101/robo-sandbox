@@ -9,6 +9,9 @@ class MotorBody : public Body
 {
 public:
     b2Body *m_body;
+    b2BodyDef bodyDef;
+    b2PolygonShape polygonShape;
+
     float m_maxForwardSpeed;
     float m_maxBackwardSpeed;
     float m_maxDriveForce;

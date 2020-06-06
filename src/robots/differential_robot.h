@@ -11,7 +11,9 @@
 #include "box2d/box2d.h"
 #include "motor_actuator.h"
 #include "motor_body.h"
+#include "distance_body.h"
 #include "button_sensor.h"
+#include "distance_sensor.h"
 
 extern "C"
 {
@@ -61,7 +63,9 @@ protected:
 	static void sleepHook(avr_t *avr, avr_cycle_count_t how_long);
 
 	MotorBody motorBody_array[2];
+	DistanceBody sensorBody_array[2];
 	MotorActuator actuator_array[2];
+	DistanceSensor sensor_array[2];
 	ButtonSensor sensor;
 	b2World *m_world;
 	DifferentialRobotBody *m_body;

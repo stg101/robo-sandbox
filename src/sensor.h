@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "box2d/box2d.h"
+#include "body.h"
 
 extern "C"
 {
@@ -20,8 +21,8 @@ public:
 	Sensor(){};
 	virtual ~Sensor(){};
 
-	virtual void connect(avr_t *n_avr){};
-	virtual void createBody(b2World *n_m_world){};
+	virtual void connect(avr_t *n_avr, int index){};
+	virtual void createBody(b2World *n_m_world, int i, b2Body *chasis_body, Body *motorBody){};
 
 	virtual void apply(){};
 

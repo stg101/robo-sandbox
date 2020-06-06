@@ -1,11 +1,12 @@
 
-#ifndef BUTTON_SENSOR_H
-#define BUTTON_SENSOR_H
+#ifndef DISTANCE_SENSOR_H
+#define DISTANCE_SENSOR_H
 
 #include <stdio.h>
 #include <stdbool.h>
 #include "box2d/box2d.h"
 #include "sensor.h"
+#include "distance_body.h"
 
 extern "C"
 {
@@ -16,14 +17,14 @@ extern "C"
 
 using namespace std;
 
-class ButtonSensor : public Sensor
+class DistanceSensor : public Sensor
 {
 public:
-    ButtonSensor();
-    ~ButtonSensor();
+    DistanceSensor();
+    ~DistanceSensor();
 
     void connect(avr_t *n_avr, int index) override;
-    void createBody(b2World *world, int i, b2Body *chasis_body, Body *motorBody) override;
+    void createBody(b2World *world, int i, b2Body *chasis_body, Body *distanceBody) override;
 
     void apply() override;
 
@@ -31,6 +32,9 @@ protected:
     avr_t *avr;
     button_t button;
     b2World *m_world;
+    b2RevoluteJointDef jointDef;
+    b2Body *m_chasis_body;
+    DistanceBody *m_distanceBody;
 };
 
 #endif

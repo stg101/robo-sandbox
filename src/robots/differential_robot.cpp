@@ -108,10 +108,13 @@ int DifferentialRobot::createMCU(const char *firmware_path)
 	avr->aref = ADC_VREF_V256;
 	avr->sleep = sleepHook;
 
-	sensor.connect(avr);
+	sensor.connect(avr, 0);
 
 	for (int i = 0; i < 2; i++)
 		actuator_array[i].connect(avr, i);
+
+	for (int i = 0; i < 2; i++)
+		sensor_array[i].connect(avr, i);
 }
 
 void DifferentialRobot::createBody(b2World *world, Body *body)
@@ -121,6 +124,9 @@ void DifferentialRobot::createBody(b2World *world, Body *body)
 
 	for (int i = 0; i < 2; i++)
 		actuator_array[i].createBody(m_world, i, m_body->m_body, &motorBody_array[i]);
+
+	for (int i = 0; i < 2; i++)
+		sensor_array[i].createBody(m_world, i, m_body->m_body, &sensorBody_array[i]);
 }
 
 void DifferentialRobot::runSim()
