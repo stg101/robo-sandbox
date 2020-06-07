@@ -15,6 +15,8 @@ public:
     b2RayCastInput rayCastInput;
     int maxDistance;
 
+    uint16 categoryBits;
+
     DistanceBody();
 
     void createBody(b2World *world) override;

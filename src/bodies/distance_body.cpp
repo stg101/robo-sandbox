@@ -4,6 +4,7 @@ DistanceBody::DistanceBody()
     : Body()
 {
     maxDistance = 10.0f;
+    categoryBits = 0x0002;
 }
 
 void DistanceBody::createBody(b2World *world)
@@ -44,5 +45,8 @@ void DistanceBody::createBody(b2World *world)
     fd.shape = &sensorPolygonShape;
     fd.friction = 0.0f;
     fd.isSensor = true;
+    fd.filter.categoryBits = categoryBits;
+    fd.filter.maskBits = categoryBits ^ 0xffff;
+
     m_body->CreateFixture(&fd); //shape density
 }
