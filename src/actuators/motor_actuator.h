@@ -22,7 +22,7 @@ public:
 	~MotorActuator();
 
 	void connect(avr_t *n_avr, int i) override;
-	void createBody(b2World *world, int i, b2Body *chasis_body, Body *motorBody) override;
+	void createBody(b2World *world, b2Body *chasis_body, Body *motorBody) override;
 
 	void apply() override;
 
@@ -35,7 +35,7 @@ protected:
 	MotorBody *m_motorBody;
 	uint8_t pin_state;
 	uint8_t old_pin_state;
-	int index;
+	uint8_t index;
 };
 
 #endif

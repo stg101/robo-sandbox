@@ -17,6 +17,7 @@ void MotorBody::createBody(b2World *world)
 
 void MotorBody::setCharacteristics(float maxForwardSpeed, float maxBackwardSpeed, float maxDriveForce)
 {
+
     m_maxForwardSpeed = maxForwardSpeed;
     m_maxBackwardSpeed = maxBackwardSpeed;
     m_maxDriveForce = maxDriveForce;
@@ -91,5 +92,5 @@ void MotorBody::updateDrive(int controlState, float speedRatio)
 void MotorBody::setState(int controlState, float speedRatio)
 {
     updateFriction();
-    updateDrive(speedRatio, controlState);
+    updateDrive(controlState, speedRatio);
 }

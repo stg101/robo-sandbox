@@ -38,7 +38,7 @@ void MotorActuator::hook(struct avr_irq_t *irq, uint32_t value, void *param)
 	actuator->pin_state = value;
 }
 
-void MotorActuator::createBody(b2World *world, int i, b2Body *chasis_body, Body *motorBody)
+void MotorActuator::createBody(b2World *world, b2Body *chasis_body, Body *motorBody)
 {
 	m_world = world;
 	m_chasis_body = chasis_body;
@@ -55,9 +55,9 @@ void MotorActuator::createBody(b2World *world, int i, b2Body *chasis_body, Body 
 	m_motorBody->setCharacteristics(600, -600, 1000);
 
 	jointDef.bodyB = m_motorBody->m_body;
-	if (i == 0)
+	if (index == 0)
 		jointDef.localAnchorA.Set(-3, 0.75f);
-	if (i == 1)
+	if (index == 1)
 		jointDef.localAnchorA.Set(3, 0.75f);
 
 	world->CreateJoint(&jointDef);
@@ -66,7 +66,7 @@ void MotorActuator::createBody(b2World *world, int i, b2Body *chasis_body, Body 
 void MotorActuator::apply()
 {
 	if (pin_state == 0)
-		m_motorBody->setState(0, 1.0f);
+		m_motorBody->setState(MotorBody::TDC_DOWN, 1.0f);
 	else
 		m_motorBody->setState(MotorBody::TDC_UP, 1.0f);
 }

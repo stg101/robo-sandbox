@@ -4,6 +4,7 @@
 #include <vector>
 #include "box2d/box2d.h"
 #include "body.h"
+#include <iostream>
 
 class MotorBody : public Body
 {

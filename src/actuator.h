@@ -21,7 +21,7 @@ public:
 	virtual ~Actuator(){};
 
 	virtual void connect(avr_t *n_avr, int i){};
-	virtual void createBody(b2World *world, int i, b2Body *chasis_body, Body *motorBody){};
+	virtual void createBody(b2World *world, b2Body *chasis_body, Body *motorBody){};
 
 	virtual void apply(){};
 

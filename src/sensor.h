@@ -21,8 +21,8 @@ public:
 	Sensor(){};
 	virtual ~Sensor(){};
 
-	virtual void connect(avr_t *n_avr, int index){};
-	virtual void createBody(b2World *n_m_world, int i, b2Body *chasis_body, Body *motorBody){};
+	virtual void connect(avr_t *avr, int index){};
+	virtual void createBody(b2World *n_m_world, b2Body *chasis_body, Body *motorBody){};
 
 	virtual void apply(){};
 

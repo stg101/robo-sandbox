@@ -3,27 +3,24 @@
 
 DistanceSensor::DistanceSensor()
 {
+    name = "distance";
+    value = 0;
 }
 
 DistanceSensor::~DistanceSensor()
 {
 }
 
-void DistanceSensor::connect(avr_t *n_avr, int index)
+void DistanceSensor::connect(avr_t *avr, int index)
 {
-    avr = n_avr;
-    // initialize our 'peripheral'
-    // button_init(avr, &button, "button");
-    // // "connect" the output irw of the button to the port pin of the AVR
-    // avr_connect_irq(
-    //     button.irq + IRQ_BUTTON_OUT,
-    //     avr_io_getirq(avr, AVR_IOCTL_IOPORT_GETIRQ('C'), 0));
+    this->avr = avr;
+    this->index = index;
 
-    // // 'raise' it, it's a "pullup"
-    // avr_raise_irq(button.irq + IRQ_BUTTON_OUT, 1);
+    irq = avr_alloc_irq(&avr->irq_pool, 0, 1, &name);
+    avr_connect_irq(irq, avr_io_getirq(avr, AVR_IOCTL_IOPORT_GETIRQ('C'), index));
 }
 
-void DistanceSensor::createBody(b2World *world, int i, b2Body *chasis_body, Body *distanceBody)
+void DistanceSensor::createBody(b2World *world, b2Body *chasis_body, Body *distanceBody)
 {
     m_world = world;
 
@@ -39,15 +36,33 @@ void DistanceSensor::createBody(b2World *world, int i, b2Body *chasis_body, Body
     m_distanceBody->createBody(m_world);
 
     jointDef.bodyB = m_distanceBody->m_body;
-    if (i == 0)
-        jointDef.localAnchorA.Set(-3, 2.75f);
-    if (i == 1)
-        jointDef.localAnchorA.Set(3, 2.75f);
+    if (index == 0)
+        jointDef.localAnchorA.Set(-3.25, 2.75f);
+    if (index == 1)
+        jointDef.localAnchorA.Set(3.25, 2.75f);
 
     world->CreateJoint(&jointDef);
 }
 
 void DistanceSensor::apply()
 {
-    button_press(&button, 1000000);
+
+    if (!m_distanceBody->m_body)
+        return;
+
+    value = 0;
+    bool stop = false;
+
+    for (b2ContactEdge *ce = m_distanceBody->m_body->GetContactList(); ce && !stop; ce = ce->next)
+    {
+        b2Contact *c = ce->contact;
+
+        if (c->IsTouching())
+        {
+            value = 1;
+            stop = true;
+        }
+    }
+
+    avr_raise_irq(irq, value);
 }

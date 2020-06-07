@@ -23,7 +23,7 @@ public:
     ~ButtonSensor();
 
     void connect(avr_t *n_avr, int index) override;
-    void createBody(b2World *world, int i, b2Body *chasis_body, Body *motorBody) override;
+    void createBody(b2World *world, b2Body *chasis_body, Body *motorBody) override;
 
     void apply() override;
 

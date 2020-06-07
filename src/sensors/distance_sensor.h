@@ -24,7 +24,7 @@ public:
     ~DistanceSensor();
 
     void connect(avr_t *n_avr, int index) override;
-    void createBody(b2World *world, int i, b2Body *chasis_body, Body *distanceBody) override;
+    void createBody(b2World *world, b2Body *chasis_body, Body *distanceBody) override;
 
     void apply() override;
 
@@ -35,6 +35,11 @@ protected:
     b2RevoluteJointDef jointDef;
     b2Body *m_chasis_body;
     DistanceBody *m_distanceBody;
+
+    avr_irq_t *irq;
+    const char *name;
+    uint8_t value;
+    uint8_t index;
 };
 
 #endif

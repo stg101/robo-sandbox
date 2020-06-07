@@ -12,7 +12,6 @@
 #include "motor_actuator.h"
 #include "motor_body.h"
 #include "distance_body.h"
-#include "button_sensor.h"
 #include "distance_sensor.h"
 
 extern "C"
@@ -66,7 +65,6 @@ protected:
 	DistanceBody sensorBody_array[2];
 	MotorActuator actuator_array[2];
 	DistanceSensor sensor_array[2];
-	ButtonSensor sensor;
 	b2World *m_world;
 	DifferentialRobotBody *m_body;
 	elf_firmware_t f;

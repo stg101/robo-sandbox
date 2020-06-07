@@ -13,6 +13,46 @@ public:
 	{
 		robots_counter = 0;
 		m_world->SetGravity(b2Vec2(0, 0));
+
+		b2Body *ground = NULL;
+		{
+			b2BodyDef bd;
+			ground = m_world->CreateBody(&bd);
+
+			b2EdgeShape shape;
+
+			b2FixtureDef fd;
+			fd.shape = &shape;
+			fd.density = 0.0f;
+			fd.friction = 0.6f;
+
+			shape.Set(b2Vec2(-100.0f, -100.0f), b2Vec2(100.0f, -100.0f));
+			ground->CreateFixture(&fd);
+			shape.Set(b2Vec2(100.0f, -100.0f), b2Vec2(100.0f, 100.0f));
+			ground->CreateFixture(&fd);
+			shape.Set(b2Vec2(100.0f, 100.0f), b2Vec2(-100.0f, 100.0f));
+			ground->CreateFixture(&fd);
+			shape.Set(b2Vec2(-100.0f, 100.0f), b2Vec2(-100.0f, -100.0f));
+			ground->CreateFixture(&fd);
+		}
+
+		// Boxes
+		{
+			b2PolygonShape box;
+			box.SetAsBox(10.0f, 10.0f);
+
+			b2Body *body = NULL;
+			b2BodyDef bd;
+			bd.type = b2_staticBody;
+
+			bd.position.Set(20.0f, 20.f);
+			body = m_world->CreateBody(&bd);
+			body->CreateFixture(&box, 0.5f);
+
+			bd.position.Set(-20.0f, -20.f);
+			body = m_world->CreateBody(&bd);
+			body->CreateFixture(&box, 0.5f);
+		}
 	}
 
 	void Keyboard(int key) override

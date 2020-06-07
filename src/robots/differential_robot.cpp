@@ -26,7 +26,6 @@ void DifferentialRobot::keyPress(unsigned char key) /* called on key press */
 	{
 	case 'J':
 		printf("Message sent\n");
-		sensor.apply();
 		break;
 	case 'H':
 		printf("*** PAUSED ***\n");
@@ -108,8 +107,6 @@ int DifferentialRobot::createMCU(const char *firmware_path)
 	avr->aref = ADC_VREF_V256;
 	avr->sleep = sleepHook;
 
-	sensor.connect(avr, 0);
-
 	for (int i = 0; i < 2; i++)
 		actuator_array[i].connect(avr, i);
 
@@ -123,10 +120,10 @@ void DifferentialRobot::createBody(b2World *world, Body *body)
 	m_body = dynamic_cast<DifferentialRobotBody *>(body);
 
 	for (int i = 0; i < 2; i++)
-		actuator_array[i].createBody(m_world, i, m_body->m_body, &motorBody_array[i]);
+		actuator_array[i].createBody(m_world, m_body->m_body, &motorBody_array[i]);
 
 	for (int i = 0; i < 2; i++)
-		sensor_array[i].createBody(m_world, i, m_body->m_body, &sensorBody_array[i]);
+		sensor_array[i].createBody(m_world, m_body->m_body, &sensorBody_array[i]);
 }
 
 void DifferentialRobot::runSim()
@@ -168,6 +165,11 @@ void DifferentialRobot::runTimeBatch(uint64_t run_ns)
 	for (int i = 0; i < 2; i++)
 	{
 		actuator_array[i].apply();
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		sensor_array[i].apply();
 	}
 }
 

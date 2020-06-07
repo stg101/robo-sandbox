@@ -13,16 +13,14 @@ void DifferentialRobotBody::createBody(b2World *world)
     m_body = world->CreateBody(&bodyDef);
     m_body->SetAngularDamping(3);
 
-    b2Vec2 vertices[8];
-    vertices[0].Set(1.5, 0);
+    b2Vec2 vertices[6];
+    vertices[0].Set(2.0, 0);
     vertices[1].Set(3, 2.5);
-    vertices[2].Set(2.8, 5.5);
-    vertices[3].Set(1, 10);
-    vertices[4].Set(-1, 10);
-    vertices[5].Set(-2.8, 5.5);
-    vertices[6].Set(-3, 2.5);
-    vertices[7].Set(-1.5, 0);
+    vertices[2].Set(2.2, 5.5);
+    vertices[3].Set(-2.2, 5.5);
+    vertices[4].Set(-3, 2.5);
+    vertices[5].Set(-2.0, 0);
     b2PolygonShape polygonShape;
-    polygonShape.Set(vertices, 8);
+    polygonShape.Set(vertices, 6);
     b2Fixture *fixture = m_body->CreateFixture(&polygonShape, 0.1f); //shape, density
 }
