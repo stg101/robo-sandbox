@@ -368,7 +368,7 @@ static void UpdateUI()
 			{
 				ImGui::SliderInt("Vel Iters", &s_settings.m_velocityIterations, 0, 50);
 				ImGui::SliderInt("Pos Iters", &s_settings.m_positionIterations, 0, 50);
-				ImGui::SliderFloat("Hertz", &s_settings.m_hertz, 5.0f, 120.0f, "%.0f hz");
+				ImGui::SliderFloat("Hertz", &s_settings.m_hertz, 5.0f, 60.0f * 20, "%.0f hz");
 
 				ImGui::Separator();
 
@@ -594,6 +594,7 @@ int main(int, char **)
 			s_test->DrawTitle(buffer);
 		}
 
+		s_settings.m_hertz = 60 * int(s_settings.m_hertz / 60.0f);
 		s_test->Step(s_settings);
 
 		UpdateUI();

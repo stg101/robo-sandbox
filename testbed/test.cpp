@@ -270,6 +270,10 @@ void Test::LaunchBomb(const b2Vec2& position, const b2Vec2& velocity)
 	m_bomb->CreateFixture(&fd);
 }
 
+void Test::EnvStep(Settings& settings)
+{
+}
+
 void Test::Step(Settings& settings)
 {
 	float timeStep = settings.m_hertz > 0.0f ? 1.0f / settings.m_hertz : float(0.0f);
@@ -303,7 +307,15 @@ void Test::Step(Settings& settings)
 
 	m_pointCount = 0;
 
-	m_world->Step(timeStep, settings.m_velocityIterations, settings.m_positionIterations);
+	int maxStepsCount = settings.m_hertz / 60.0f;
+	int stepsCount = 0;
+
+	while (stepsCount < maxStepsCount)
+	{
+		EnvStep(settings);
+		m_world->Step(timeStep, settings.m_velocityIterations, settings.m_positionIterations);
+		stepsCount++;
+	}
 
 	m_world->DebugDraw();
     g_debugDraw.Flush();

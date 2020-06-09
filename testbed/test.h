@@ -85,6 +85,7 @@ public:
 	virtual ~Test();
 
 	void DrawTitle(const char* string);
+	virtual void EnvStep(Settings& settings);
 	virtual void Step(Settings& settings);
 	virtual void UpdateUI() {}
 	virtual void Keyboard(int key) { B2_NOT_USED(key); }

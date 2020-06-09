@@ -56,6 +56,9 @@
         "sim_irq.h": "c",
         "functional": "cpp",
         "iterator": "cpp",
-        "avr_mcu_section.h": "c"
-    }
+        "avr_mcu_section.h": "c",
+        "numeric": "cpp",
+        "random": "cpp"
+    },
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
 }
