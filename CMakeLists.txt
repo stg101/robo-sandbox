@@ -3,6 +3,9 @@ project(RoboSandboxProject VERSION 1.0.0)
 project(RoboSandboxProject C CXX)
 
 
+option(BOX2D_BUILD_UNIT_TESTS "Build the Box2D unit tests" OFF)
+option(BOX2D_BUILD_TESTBED "Build the Box2D testbed" OFF)
+
 execute_process(COMMAND ${CMAKE_C_COMPILER} -dumpmachine OUTPUT_VARIABLE SIMAVR_OBJ_DIRNAME)
 string(STRIP ${SIMAVR_OBJ_DIRNAME} SIMAVR_OBJ_DIRNAME)
 
@@ -11,6 +14,10 @@ find_package(SDL2 REQUIRED)
 find_package(OpenGL REQUIRED)
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/box2d)
+add_subdirectory(${CMAKE_SOURCE_DIR}/extern/glad)
+add_subdirectory(${CMAKE_SOURCE_DIR}/extern/glfw)
+add_subdirectory(${CMAKE_SOURCE_DIR}/extern/imgui)
+add_subdirectory(${CMAKE_SOURCE_DIR}/extern/sajson)
 add_subdirectory(${CMAKE_SOURCE_DIR}/testbed/tests/diff_robot_arduino)
 add_subdirectory(${CMAKE_SOURCE_DIR}/testbed/tests/diff_robot_avr)
 
@@ -54,7 +61,16 @@ add_custom_target(
 )
 
 add_executable(RoboSandboxProject ${HELLO_EMU_SRCS})
-add_dependencies(RoboSandboxProject box2d simavr_lib)
+add_dependencies(
+    RoboSandboxProject 
+    box2d 
+    glfw
+    imgui
+    sajson
+    glad
+    simavr_lib
+)
+
 
 
 target_link_libraries(
