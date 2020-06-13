@@ -18,11 +18,11 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/extern/glad)
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/glfw)
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/imgui)
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/sajson)
-add_subdirectory(${CMAKE_SOURCE_DIR}/editor/tests/diff_robot_arduino)
-add_subdirectory(${CMAKE_SOURCE_DIR}/editor/tests/diff_robot_avr)
+add_subdirectory(${CMAKE_SOURCE_DIR}/sandbox/tests/diff_robot_arduino)
+add_subdirectory(${CMAKE_SOURCE_DIR}/sandbox/tests/diff_robot_avr)
 
 include_directories (
-    ${CMAKE_SOURCE_DIR}/editor
+    ${CMAKE_SOURCE_DIR}/sandbox
     ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/src/bodies
     ${CMAKE_SOURCE_DIR}/src/actuators
@@ -42,16 +42,16 @@ file(
     GLOB HELLO_EMU_SRCS
     "${CMAKE_SOURCE_DIR}/extern/simavr/examples/parts/button.c"
     "${CMAKE_SOURCE_DIR}/extern/simavr/simavr/sim/sim_elf.c"
-    "${CMAKE_SOURCE_DIR}/editor/*.cpp"
+    "${CMAKE_SOURCE_DIR}/sandbox/*.cpp"
     "${CMAKE_SOURCE_DIR}/src/*.cpp"
     "${CMAKE_SOURCE_DIR}/src/bodies/*.cpp"
     "${CMAKE_SOURCE_DIR}/src/actuators/*.cpp"
     "${CMAKE_SOURCE_DIR}/src/sensors/*.cpp"
     "${CMAKE_SOURCE_DIR}/src/robots/*.cpp"
-    "${CMAKE_SOURCE_DIR}/editor/tests/*.cpp"
-    "${CMAKE_SOURCE_DIR}/editor/tests/diff_robot_arduino/*.cpp"
-    "${CMAKE_SOURCE_DIR}/editor/tests/diff_robot_avr/*.cpp"
-    "${CMAKE_SOURCE_DIR}/editor/tests/env_test/*.cpp"
+    "${CMAKE_SOURCE_DIR}/sandbox/tests/*.cpp"
+    "${CMAKE_SOURCE_DIR}/sandbox/tests/diff_robot_arduino/*.cpp"
+    "${CMAKE_SOURCE_DIR}/sandbox/tests/diff_robot_avr/*.cpp"
+    "${CMAKE_SOURCE_DIR}/sandbox/tests/env_test/*.cpp"
 )
 
 add_custom_target(
@@ -97,5 +97,5 @@ set_target_properties(RoboSandboxProject PROPERTIES
 add_custom_command(
         TARGET RoboSandboxProject POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
-                ${CMAKE_CURRENT_SOURCE_DIR}/editor/data/
+                ${CMAKE_CURRENT_SOURCE_DIR}/sandbox/data/
                 ${CMAKE_CURRENT_BINARY_DIR}/data/)
