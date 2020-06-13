@@ -24,10 +24,10 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/sandbox/tests/diff_robot_avr)
 include_directories (
     ${CMAKE_SOURCE_DIR}/sandbox
     ${CMAKE_SOURCE_DIR}/core
-    ${CMAKE_SOURCE_DIR}/core/bodies
-    ${CMAKE_SOURCE_DIR}/core/actuators
-    ${CMAKE_SOURCE_DIR}/core/sensors
-    ${CMAKE_SOURCE_DIR}/core/robots
+    ${CMAKE_SOURCE_DIR}/sandbox/bodies
+    ${CMAKE_SOURCE_DIR}/sandbox/actuators
+    ${CMAKE_SOURCE_DIR}/sandbox/sensors
+    ${CMAKE_SOURCE_DIR}/sandbox/robots
     /usr/local/include
     ${CMAKE_SOURCE_DIR}/extern/simavr/simavr/cores
     ${CMAKE_SOURCE_DIR}/extern/simavr/examples/parts
@@ -44,10 +44,10 @@ file(
     "${CMAKE_SOURCE_DIR}/extern/simavr/simavr/sim/sim_elf.c"
     "${CMAKE_SOURCE_DIR}/sandbox/*.cpp"
     "${CMAKE_SOURCE_DIR}/core/*.cpp"
-    "${CMAKE_SOURCE_DIR}/core/bodies/*.cpp"
-    "${CMAKE_SOURCE_DIR}/core/actuators/*.cpp"
-    "${CMAKE_SOURCE_DIR}/core/sensors/*.cpp"
-    "${CMAKE_SOURCE_DIR}/core/robots/*.cpp"
+    "${CMAKE_SOURCE_DIR}/sandbox/bodies/*.cpp"
+    "${CMAKE_SOURCE_DIR}/sandbox/actuators/*.cpp"
+    "${CMAKE_SOURCE_DIR}/sandbox/sensors/*.cpp"
+    "${CMAKE_SOURCE_DIR}/sandbox/robots/*.cpp"
     "${CMAKE_SOURCE_DIR}/sandbox/tests/*.cpp"
     "${CMAKE_SOURCE_DIR}/sandbox/tests/diff_robot_arduino/*.cpp"
     "${CMAKE_SOURCE_DIR}/sandbox/tests/diff_robot_avr/*.cpp"
