@@ -64,7 +64,7 @@ public:
 			if (robots_counter < MAX_ROBOTS)
 			{
 				robot_body_array[robots_counter].createBody(m_world);
-				robot_array[robots_counter].createMCU("./testbed/tests/diff_robot_arduino/arduino_firmware/arduino_firmware.arduino.avr.uno.hex");
+				robot_array[robots_counter].createMCU("./sandbox/tests/diff_robot_arduino/arduino_firmware/arduino_firmware.arduino.avr.uno.hex");
 				robot_array[robots_counter].createBody(m_world, &robot_body_array[robots_counter]);
 				robot_array[robots_counter].setIsReady(true);
 				robots_counter++;
