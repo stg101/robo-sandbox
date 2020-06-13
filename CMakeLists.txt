@@ -10,7 +10,7 @@ string(STRIP ${SIMAVR_OBJ_DIRNAME} SIMAVR_OBJ_DIRNAME)
 find_package(SDL2 REQUIRED)
 find_package(OpenGL REQUIRED)
 
-add_subdirectory(${CMAKE_SOURCE_DIR}/box2d)
+add_subdirectory(${CMAKE_SOURCE_DIR}/extern/box2d)
 add_subdirectory(${CMAKE_SOURCE_DIR}/testbed/tests/diff_robot_arduino)
 add_subdirectory(${CMAKE_SOURCE_DIR}/testbed/tests/diff_robot_avr)
 
@@ -22,10 +22,10 @@ include_directories (
     ${CMAKE_SOURCE_DIR}/src/sensors
     ${CMAKE_SOURCE_DIR}/src/robots
     /usr/local/include
-    ${CMAKE_SOURCE_DIR}/simavr/simavr/cores
-    ${CMAKE_SOURCE_DIR}/simavr/examples/parts
-    ${CMAKE_SOURCE_DIR}/simavr/simavr/sim
-    ${CMAKE_SOURCE_DIR}/box2d/include
+    ${CMAKE_SOURCE_DIR}/extern/simavr/simavr/cores
+    ${CMAKE_SOURCE_DIR}/extern/simavr/examples/parts
+    ${CMAKE_SOURCE_DIR}/extern/simavr/simavr/sim
+    ${CMAKE_SOURCE_DIR}/extern/box2d/include
     ${SDL2_INCLUDE_DIRS}
     ${OPENGL_INCLUDE_DIRS}
 )
@@ -33,8 +33,8 @@ include_directories (
 
 file(
     GLOB HELLO_EMU_SRCS
-    "${CMAKE_SOURCE_DIR}/simavr/examples/parts/button.c"
-    "${CMAKE_SOURCE_DIR}/simavr/simavr/sim/sim_elf.c"
+    "${CMAKE_SOURCE_DIR}/extern/simavr/examples/parts/button.c"
+    "${CMAKE_SOURCE_DIR}/extern/simavr/simavr/sim/sim_elf.c"
     "${CMAKE_SOURCE_DIR}/testbed/*.cpp"
     "${CMAKE_SOURCE_DIR}/src/*.cpp"
     "${CMAKE_SOURCE_DIR}/src/bodies/*.cpp"
@@ -50,7 +50,7 @@ file(
 add_custom_target(
     simavr_lib
     COMMAND make libsimavr
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/simavr/simavr
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/extern/simavr/simavr
 )
 
 add_executable(RoboSandboxProject ${HELLO_EMU_SRCS})
@@ -65,7 +65,7 @@ target_link_libraries(
     imgui
     sajson
     glad
-    ${CMAKE_SOURCE_DIR}/simavr/simavr/obj-${SIMAVR_OBJ_DIRNAME}/libsimavr.a
+    ${CMAKE_SOURCE_DIR}/extern/simavr/simavr/obj-${SIMAVR_OBJ_DIRNAME}/libsimavr.a
     ${SDL2_LIBRARIES}
     ${OPENGL_LIBRARIES}
 )

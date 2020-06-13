@@ -34,7 +34,7 @@ set(CMAKE_ASM_COMPILER avr-gcc)
 
 # Include simavr directories
 include_directories (
-    ${CMAKE_SOURCE_DIR}/simavr/simavr/sim/avr
+    ${CMAKE_SOURCE_DIR}/extern/simavr/simavr/sim/avr
 )
 
 

@@ -1,8 +1,8 @@
 [submodule "box2d"]
-	path = box2d
+	path = extern/box2d
 	url = git@github.com:erincatto/box2d.git
 	branch = master
 [submodule "simavr"]
-	path = simavr
+	path = extern/simavr
 	url = git@github.com:buserror/simavr.git
 	branch = master
