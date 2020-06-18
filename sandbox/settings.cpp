@@ -25,12 +25,12 @@
 #include "sajson/sajson.h"
 #include <stdio.h>
 
-static const char* fileName = "settings.ini";
+static const char *fileName = "settings.ini";
 
 // Load a file. You must free the character array.
-static bool sReadFile(char*& data, int& size, const char* filename)
+static bool sReadFile(char *&data, int &size, const char *filename)
 {
-	FILE* file = fopen(filename, "rb");
+	FILE *file = fopen(filename, "rb");
 	if (file == nullptr)
 	{
 		return false;
@@ -45,7 +45,7 @@ static bool sReadFile(char*& data, int& size, const char* filename)
 		return false;
 	}
 
-	data = (char*)malloc(size + 1);
+	data = (char *)malloc(size + 1);
 	fread(data, size, 1, file);
 	fclose(file);
 	data[size] = 0;
@@ -55,7 +55,7 @@ static bool sReadFile(char*& data, int& size, const char* filename)
 
 void Settings::Save()
 {
-	FILE* file = fopen(fileName, "w");
+	FILE *file = fopen(fileName, "w");
 	fprintf(file, "{\n");
 	fprintf(file, "  \"testIndex\": %d,\n", m_testIndex);
 	fprintf(file, "  \"windowWidth\": %d,\n", m_windowWidth);
@@ -83,15 +83,15 @@ void Settings::Save()
 
 void Settings::Load()
 {
-	char* data = nullptr;
+	char *data = nullptr;
 	int size = 0;
 	bool found = sReadFile(data, size, fileName);
-	if (found ==  false)
+	if (found == false)
 	{
 		return;
 	}
 
-	const sajson::document& document = sajson::parse(sajson::dynamic_allocation(), sajson::mutable_string_view(size, data));
+	const sajson::document &document = sajson::parse(sajson::dynamic_allocation(), sajson::mutable_string_view(size, data));
 	if (document.is_valid() == false)
 	{
 		return;

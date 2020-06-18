@@ -18,6 +18,7 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/extern/glad)
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/glfw)
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/imgui)
 add_subdirectory(${CMAKE_SOURCE_DIR}/extern/sajson)
+add_subdirectory(${CMAKE_SOURCE_DIR}/extern/rapidjson)
 add_subdirectory(${CMAKE_SOURCE_DIR}/sandbox/tests/diff_robot_arduino)
 add_subdirectory(${CMAKE_SOURCE_DIR}/sandbox/tests/diff_robot_avr)
 
@@ -33,6 +34,7 @@ include_directories (
     ${CMAKE_SOURCE_DIR}/extern/simavr/examples/parts
     ${CMAKE_SOURCE_DIR}/extern/simavr/simavr/sim
     ${CMAKE_SOURCE_DIR}/extern/box2d/include
+    ${CMAKE_SOURCE_DIR}/extern/rapidjson/include
     ${SDL2_INCLUDE_DIRS}
     ${OPENGL_INCLUDE_DIRS}
 )

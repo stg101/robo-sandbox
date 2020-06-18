@@ -6,3 +6,7 @@
 	path = extern/simavr
 	url = git@github.com:buserror/simavr.git
 	branch = master
+[submodule "extern/rapidjson"]
+	path = extern/rapidjson
+	url = git@github.com:Tencent/rapidjson.git
+	branch = master
