@@ -24,7 +24,7 @@ public:
 			if (robots_counter < MAX_ROBOTS)
 			{
 				robot_body_array[robots_counter].createBody(m_world);
-				robot_array[robots_counter].createMCU("./sandbox/tests/diff_robot_avr/atmega_firmware.hex");
+				robot_array[robots_counter].createMCU("./sandbox/firmware/avr/firmware/firmware.hex");
 				robot_array[robots_counter].createBody(m_world, &robot_body_array[robots_counter]);
 				robot_array[robots_counter].setIsReady(true);
 				robots_counter++;

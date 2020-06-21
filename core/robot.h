@@ -8,6 +8,7 @@
 #include <stdbool.h>
 #include <thread>
 #include "box2d/box2d.h"
+#include "rapidjson/document.h" 
 #include "motor_actuator.h"
 #include "motor_body.h"
 #include "button_sensor.h"
@@ -40,6 +41,7 @@ public:
 	Robot(){};
 	virtual ~Robot(){};
 
+	int loadDefinition(const char *path);
 	virtual int createMCU(const char *){};
 	virtual void createBody(b2World *world, Body *body){};
 	virtual void keyPress(unsigned char key){};
