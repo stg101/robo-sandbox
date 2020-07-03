@@ -8,7 +8,7 @@
 #include <stdbool.h>
 #include <thread>
 #include "box2d/box2d.h"
-#include "rapidjson/document.h" 
+#include "rapidjson/document.h"
 #include "motor_actuator.h"
 #include "motor_body.h"
 #include "button_sensor.h"
@@ -51,6 +51,10 @@ public:
 	virtual void runTimeBatch(uint64_t run_ns){};
 
 protected:
+	static void sleepHook(avr_t *avr, avr_cycle_count_t how_long);
+
+	avr_t *avr;
+	const char *fname;
 };
 
 #endif

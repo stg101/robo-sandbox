@@ -1,0 +1,7 @@
+{
+  "firmware": {
+    "path": "./sandbox/firmware/arduino/firmware/firmware.arduino.avr.uno.hex",
+    "mcu": "atmega328p",
+    "frecuency": 16000000
+  }
+}

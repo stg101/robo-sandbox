@@ -63,6 +63,7 @@ add_dependencies(
   RoboSandboxProject
   avr_firmware
   arduino_firmware
+  copy_definitions
   box2d
   glfw
   imgui
@@ -93,3 +94,12 @@ add_custom_command(
   COMMAND
     ${CMAKE_COMMAND} -E copy_directory
     ${CMAKE_CURRENT_SOURCE_DIR}/sandbox/data/ ${CMAKE_CURRENT_BINARY_DIR}/data/)
+
+add_custom_target(copy_definitions)
+
+add_custom_command(
+  TARGET copy_definitions
+  COMMAND
+    ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_CURRENT_SOURCE_DIR}/sandbox/robots/
+    ${CMAKE_CURRENT_BINARY_DIR}/sandbox/robots/)

@@ -1,5 +1,6 @@
 #include "test.h"
 #include "settings.h"
+#include "robot.h"
 #include "differential_robot.h"
 #include "differential_robot_body.h"
 
@@ -13,6 +14,9 @@ public:
 	{
 		robots_counter = 0;
 		m_world->SetGravity(b2Vec2(0, 0));
+
+
+		robot.loadDefinition("./sandbox/robots/robot_def.json");
 
 		b2Body *ground = NULL;
 		{
@@ -119,6 +123,9 @@ public:
 
 	uint64_t run_ns;
 	int robots_counter;
+
+
+	Robot robot;
 	DifferentialRobot robot_array[MAX_ROBOTS];
 	DifferentialRobotBody robot_body_array[MAX_ROBOTS];
 	std::vector<std::thread> threads;
