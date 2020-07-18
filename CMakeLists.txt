@@ -34,6 +34,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/extern/simavr/simavr/sim
   ${CMAKE_SOURCE_DIR}/extern/box2d/include
   ${CMAKE_SOURCE_DIR}/extern/rapidjson/include
+  ${CMAKE_SOURCE_DIR}/utils/imgui
   ${SDL2_INCLUDE_DIRS}
   ${OPENGL_INCLUDE_DIRS})
 
@@ -42,6 +43,7 @@ file(
   HELLO_EMU_SRCS
   "${CMAKE_SOURCE_DIR}/extern/simavr/examples/parts/button.c"
   "${CMAKE_SOURCE_DIR}/extern/simavr/simavr/sim/sim_elf.c"
+  "${CMAKE_SOURCE_DIR}/utils/imgui/*.cpp"
   "${CMAKE_SOURCE_DIR}/sandbox/*.cpp"
   "${CMAKE_SOURCE_DIR}/core/*.cpp"
   "${CMAKE_SOURCE_DIR}/sandbox/bodies/*.cpp"
