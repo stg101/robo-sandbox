@@ -46,6 +46,8 @@ file(
   "${CMAKE_SOURCE_DIR}/utils/imgui/*.cpp"
   "${CMAKE_SOURCE_DIR}/sandbox/*.cpp"
   "${CMAKE_SOURCE_DIR}/core/*.cpp"
+  "${CMAKE_SOURCE_DIR}/core/Manager/*.cpp"
+  "${CMAKE_SOURCE_DIR}/core/Manager/Render/*.cpp"
   "${CMAKE_SOURCE_DIR}/sandbox/bodies/*.cpp"
   "${CMAKE_SOURCE_DIR}/sandbox/actuators/*.cpp"
   "${CMAKE_SOURCE_DIR}/sandbox/sensors/*.cpp"
